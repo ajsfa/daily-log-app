@@ -4,6 +4,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 import os
 import json
+import pytz
 
 # --- CONFIGURATION ---
 SHEET_NAME = "DailyLogApp" 
@@ -84,4 +85,5 @@ with st.form("daily_log_form"):
                     st.success("✅ Log saved to Cloud!")
                     st.balloons()
             except Exception as e:
+
                 st.error(f"Error: {e}")
