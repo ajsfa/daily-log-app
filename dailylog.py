@@ -41,7 +41,11 @@ st.title("Daily Log")
 st.write("Track the metrics, master the day.")
 
 with st.form("daily_log_form"):
-    name = st.text_input("Name")
+    query_params = st.query_params
+    default_name = query_params.get("name", "")
+    
+    # Auto-fill the box if name is found
+    name = st.text_input("Name", value=default_name)
     log_date = st.date_input("Date", datetime.date.today())
     
     st.write("### 📊 The Numbers")
@@ -94,3 +98,4 @@ with st.form("daily_log_form"):
                     st.balloons()
             except Exception as e:
                 st.error(f"Error: {e}")
+
