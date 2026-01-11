@@ -69,28 +69,28 @@ with st.form("daily_log_form"):
     submitted = st.form_submit_button("Submit Log")
 
     if submitted:
-    if not name:
-        st.error("⚠️ Name is required.")
-    else:
-        # --- TIMEZONE FIX ---
-        est = pytz.timezone('US/Eastern') 
-        now_est = datetime.datetime.now(est)
-        timestamp = now_est.strftime("%Y-%m-%d %H:%M:%S")
+        if not name:
+            st.error("⚠️ Name is required.")
+        else:
+            # --- TIMEZONE FIX ---
+            est = pytz.timezone('US/Eastern') 
+            now_est = datetime.datetime.now(est)
+            timestamp = now_est.strftime("%Y-%m-%d %H:%M:%S")
+            
+            # Format Date
+            formatted_date = log_date.strftime("%m-%d-%Y")
 
-        # Use the date picked in the form
-        formatted_date = log_date.strftime("%m-%d-%Y")
-
-        row = [
-            timestamp,
-            formatted_date,
-            name, steps, calories_consumed, water, kcal_burned, sleep, energy, 
-            workout, ", ".join(sore_area), feelings, daily_win, tomorrow_goal, vent
-        ]
-        try:
-            sheet = get_google_sheet()
-            if sheet:
-                sheet.append_row(row)
-                st.success("✅ Log saved to Cloud!")
-                st.balloons()
-        except Exception as e:
-            st.error(f"Error: {e}")
+            row = [
+                timestamp,
+                formatted_date,
+                name, steps, calories_consumed, water, kcal_burned, sleep, energy, 
+                workout, ", ".join(sore_area), feelings, daily_win, tomorrow_goal, vent
+            ]
+            try:
+                sheet = get_google_sheet()
+                if sheet:
+                    sheet.append_row(row)
+                    st.success("✅ Log saved to Cloud!")
+                    st.balloons()
+            except Exception as e:
+                st.error(f"Error: {e}")
